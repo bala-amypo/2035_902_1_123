@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Employee;
-import com.example.demo.entity.SearchQueryRecord;
+import com.example.demo.model.Employee;
+import com.example.demo.model.SearchQueryRecord;
 import com.example.demo.service.SearchQueryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;

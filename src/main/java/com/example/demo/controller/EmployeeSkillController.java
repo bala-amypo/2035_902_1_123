@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.EmployeeSkill;
+import com.example.demo.model.EmployeeSkill;
 import com.example.demo.service.EmployeeSkillService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
