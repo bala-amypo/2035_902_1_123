@@ -19,7 +19,6 @@ public class Skill {
     
     private Boolean active = true;
     
-    // Constructors
     public Skill() {}
     
     public Skill(String name, String category, String description) {
@@ -29,7 +28,6 @@ public class Skill {
         this.active = true;
     }
     
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     

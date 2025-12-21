@@ -17,7 +17,6 @@ public class SkillCategory {
     
     private Boolean active = true;
     
-    // Constructors
     public SkillCategory() {}
     
     public SkillCategory(String categoryName, String description) {
@@ -26,7 +25,6 @@ public class SkillCategory {
         this.active = true;
     }
     
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     

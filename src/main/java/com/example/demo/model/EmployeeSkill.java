@@ -26,7 +26,6 @@ public class EmployeeSkill {
     
     private Boolean active = true;
     
-    // Constructors
     public EmployeeSkill() {}
     
     public EmployeeSkill(Employee employee, Skill skill, String proficiencyLevel, Integer yearsOfExperience) {

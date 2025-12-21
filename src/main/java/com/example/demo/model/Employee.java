@@ -40,8 +40,7 @@ public class Employee {
     public void onUpdate() {
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
-    
-    // Constructors
+ 
     public Employee() {}
     
     public Employee(String fullName, String email, String department, String jobTitle) {
