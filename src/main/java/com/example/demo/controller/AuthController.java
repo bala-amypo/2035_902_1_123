@@ -25,7 +25,7 @@ public class AuthController {
         String username = request.get("username");
         String password = request.get("password");
         
-       
+        // Simple registration logic
         String encodedPassword = passwordEncoder.encode(password);
         
         return ResponseEntity.ok(Map.of("message", "User registered successfully"));
@@ -36,7 +36,7 @@ public class AuthController {
         String username = request.get("username");
         String password = request.get("password");
         
-        
+        // Simple login logic - in real app, validate against database
         String token = jwtUtil.generateToken(username);
         
         return ResponseEntity.ok(Map.of("token", token));
