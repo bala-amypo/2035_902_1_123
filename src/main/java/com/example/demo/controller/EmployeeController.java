@@ -17,27 +17,29 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public Employee create(@RequestBody Employee employee) {
+    public Employee createEmployee(@RequestBody Employee employee) {
         return service.create(employee);
     }
 
     @PutMapping("/{id}")
-    public Employee update(@PathVariable Long id, @RequestBody Employee employee) {
+    public Employee updateEmployee(
+            @PathVariable Long id,
+            @RequestBody Employee employee) {
         return service.update(id, employee);
     }
 
     @GetMapping("/{id}")
-    public Employee get(@PathVariable Long id) {
+    public Employee getEmployee(@PathVariable Long id) {
         return service.getById(id);
     }
 
     @GetMapping
-    public List<Employee> getAll() {
+    public List<Employee> getAllEmployees() {
         return service.getAll();
     }
 
     @PutMapping("/{id}/deactivate")
-    public void deactivate(@PathVariable Long id) {
+    public void deactivateEmployee(@PathVariable Long id) {
         service.deactivate(id);
     }
 }
