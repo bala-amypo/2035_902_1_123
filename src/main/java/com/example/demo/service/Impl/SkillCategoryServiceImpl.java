@@ -1,4 +1,4 @@
-package com.example.demo.service.impl;
+package com.example.demo.serviceimpl;
 
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.SkillCategory;
@@ -11,49 +11,41 @@ import java.util.List;
 @Service
 public class SkillCategoryServiceImpl implements SkillCategoryService {
 
-    private final SkillCategoryRepository SkillCategoryRepository;
+    private final SkillCategoryRepository repository;
 
-    public SkillCategoryServiceImpl(SkillCategoryRepository SkillCategoryRepository) {
-        this.SkillCategoryRepository = SkillCategoryRepository;
+    public SkillCategoryServiceImpl(SkillCategoryRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public SkillCategory createCategory(SkillCategory category) {
-        SkillCategoryRepository.findByCategoryName(category.getCategoryName())
-                .ifPresent(c -> {
-                    throw new IllegalArgumentException("Category already exists");
-                });
-
-        category.setActive(true);
-        return SkillCategoryRepository.save(category);
+    public SkillCategory create(SkillCategory category) {
+        return repository.save(category);
     }
 
     @Override
-    public SkillCategory updateCategory(Long id, SkillCategory category) {
-        SkillCategory existing = getCategoryById(id);
-
+    public SkillCategory update(Long id, SkillCategory category) {
+        SkillCategory existing = getById(id);
         existing.setCategoryName(category.getCategoryName());
         existing.setDescription(category.getDescription());
-
-        return SkillCategoryRepository.save(existing);
+        return repository.save(existing);
     }
 
     @Override
-    public SkillCategory getCategoryById(Long id) {
-        return SkillCategoryRepository.findById(id)
+    public SkillCategory getById(Long id) {
+        return repository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("SkillCategory not found"));
+                        new ResourceNotFoundException("Skill category not found"));
     }
 
     @Override
-    public List<SkillCategory> getAllCategories() {
-        return SkillCategoryRepository.findAll();
+    public List<SkillCategory> getAll() {
+        return repository.findAll();
     }
 
     @Override
-    public void deactivateCategory(Long id) {
-        SkillCategory category = getCategoryById(id);
+    public void deactivate(Long id) {
+        SkillCategory category = getById(id);
         category.setActive(false);
-        SkillCategoryRepository.save(category);
+        repository.save(category);
     }
 }
