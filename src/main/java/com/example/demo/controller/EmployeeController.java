@@ -2,45 +2,42 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Employee;
 import com.example.demo.service.EmployeeService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/employees")
-@Tag(name = "Employee Management")
+@RequestMapping("/employees")
 public class EmployeeController {
-    
-    private final EmployeeService employeeService;
-    
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+
+    private final EmployeeService service;
+
+    public EmployeeController(EmployeeService service) {
+        this.service = service;
     }
-    
+
     @PostMapping
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
-        return ResponseEntity.ok(employeeService.createEmployee(employee));
+    public Employee create(@RequestBody Employee employee) {
+        return service.create(employee);
     }
-    
+
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
-        return ResponseEntity.ok(employeeService.updateEmployee(id, employee));
+    public Employee update(@PathVariable Long id, @RequestBody Employee employee) {
+        return service.update(id, employee);
     }
-    
+
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployee(@PathVariable Long id) {
-        return ResponseEntity.ok(employeeService.getEmployeeById(id));
+    public Employee get(@PathVariable Long id) {
+        return service.getById(id);
     }
-    
+
     @GetMapping
-    public ResponseEntity<List<Employee>> getAllEmployees() {
-        return ResponseEntity.ok(employeeService.getAllEmployees());
+    public List<Employee> getAll() {
+        return service.getAll();
     }
-    
+
     @PutMapping("/{id}/deactivate")
-    public ResponseEntity<Void> deactivateEmployee(@PathVariable Long id) {
-        employeeService.deactivateEmployee(id);
-        return ResponseEntity.ok().build();
+    public void deactivate(@PathVariable Long id) {
+        service.deactivate(id);
     }
 }
