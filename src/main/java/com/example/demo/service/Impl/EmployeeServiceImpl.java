@@ -1,5 +1,6 @@
 package com.example.demo.serviceimpl;
 
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Employee;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
@@ -16,30 +17,36 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.repository = repository;
     }
 
+    @Override
     public Employee create(Employee employee) {
         return repository.save(employee);
     }
 
+    @Override
     public Employee update(Long id, Employee employee) {
-        Employee e = getById(id);
-        e.setFullName(employee.getFullName());
-        e.setDepartment(employee.getDepartment());
-        e.setJobTitle(employee.getJobTitle());
-        return repository.save(e);
+        Employee existing = getById(id);
+        existing.setFullName(employee.getFullName());
+        existing.setDepartment(employee.getDepartment());
+        existing.setJobTitle(employee.getJobTitle());
+        return repository.save(existing);
     }
 
+    @Override
     public Employee getById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Employee not found"));
     }
 
+    @Override
     public List<Employee> getAll() {
         return repository.findAll();
     }
 
+    @Override
     public void deactivate(Long id) {
-        Employee e = getById(id);
-        e.setActive(false);
-        repository.save(e);
+        Employee employee = getById(id);
+        employee.setActive(false);
+        repository.save(employee);
     }
 }

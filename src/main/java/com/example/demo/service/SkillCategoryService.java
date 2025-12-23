@@ -5,13 +5,13 @@ import java.util.List;
 
 public interface SkillCategoryService {
 
-    SkillCategory createCategory(SkillCategory category);
+    SkillCategory create(SkillCategory category);
 
-    SkillCategory updateCategory(Long id, SkillCategory category);
+    SkillCategory update(Long id, SkillCategory category);
 
-    SkillCategory getCategoryById(Long id);
+    SkillCategory getById(Long id);
 
-    List<SkillCategory> getAllCategories();
+    List<SkillCategory> getAll();
 
-    void deactivateCategory(Long id);
+    void deactivate(Long id);
 }
