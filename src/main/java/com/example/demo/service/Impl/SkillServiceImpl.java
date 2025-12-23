@@ -11,21 +11,21 @@ import java.util.List;
 @Service
 public class SkillServiceImpl implements SkillService {
 
-    private final SkillRepository skillRepository;
+    private final SkillRepository SkillRepository;
 
-    public SkillServiceImpl(SkillRepository skillRepository) {
-        this.skillRepository = skillRepository;
+    public SkillServiceImpl(SkillRepository SkillRepository) {
+        this.SkillRepository = SkillRepository;
     }
 
     @Override
     public Skill createSkill(Skill skill) {
-        skillRepository.findByName(skill.getName())
+        SkillRepository.findByName(skill.getName())
                 .ifPresent(s -> {
                     throw new IllegalArgumentException("Skill already exists");
                 });
 
         skill.setActive(true);
-        return skillRepository.save(skill);
+        return SkillRepository.save(skill);
     }
 
     @Override
@@ -36,25 +36,25 @@ public class SkillServiceImpl implements SkillService {
         existing.setCategory(skill.getCategory());
         existing.setDescription(skill.getDescription());
 
-        return skillRepository.save(existing);
+        return SkillRepository.save(existing);
     }
 
     @Override
     public Skill getSkillById(Long id) {
-        return skillRepository.findById(id)
+        return SkillRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Skill not found"));
     }
 
     @Override
     public List<Skill> getAllSkills() {
-        return skillRepository.findByActiveTrue();
+        return SkillRepository.findByActiveTrue();
     }
 
     @Override
     public void deactivateSkill(Long id) {
         Skill skill = getSkillById(id);
         skill.setActive(false);
-        skillRepository.save(skill);
+        SkillRepository.save(skill);
     }
 }
