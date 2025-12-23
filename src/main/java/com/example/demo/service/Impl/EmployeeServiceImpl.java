@@ -11,22 +11,22 @@ import java.util.List;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeRepository EmployeeRepository;
 
     // IMPORTANT: constructor order must match tests
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeServiceImpl(EmployeeRepository EmployeeRepository) {
+        this.EmployeeRepository = EmployeeRepository;
     }
 
     @Override
     public Employee createEmployee(Employee employee) {
-        employeeRepository.findByEmail(employee.getEmail())
+        EmployeeRepository.findByEmail(employee.getEmail())
                 .ifPresent(e -> {
                     throw new IllegalArgumentException("Email already exists");
                 });
 
         employee.setActive(true);
-        return employeeRepository.save(employee);
+        return EmployeeRepository.save(employee);
     }
 
     @Override
@@ -38,25 +38,25 @@ public class EmployeeServiceImpl implements EmployeeService {
         existing.setDepartment(employee.getDepartment());
         existing.setJobTitle(employee.getJobTitle());
 
-        return employeeRepository.save(existing);
+        return EmployeeRepository.save(existing);
     }
 
     @Override
     public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id)
+        return EmployeeRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Employee not found"));
     }
 
     @Override
     public List<Employee> getAllEmployees() {
-        return employeeRepository.findByActiveTrue();
+        return EmployeeRepository.findByActiveTrue();
     }
 
     @Override
     public void deactivateEmployee(Long id) {
         Employee employee = getEmployeeById(id);
         employee.setActive(false);
-        employeeRepository.save(employee);
+        EmployeeRepository.save(employee);
     }
 }
