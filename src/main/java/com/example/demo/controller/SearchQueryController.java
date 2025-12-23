@@ -1,37 +1,38 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Employee;
 import com.example.demo.model.SearchQueryRecord;
 import com.example.demo.service.SearchQueryService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/search")
-@Tag(name = "Search Management")
+@RequestMapping("/search-queries")
 public class SearchQueryController {
-    
-    private final SearchQueryService searchQueryService;
-    
-    public SearchQueryController(SearchQueryService searchQueryService) {
-        this.searchQueryService = searchQueryService;
+
+    private final SearchQueryService service;
+
+    public SearchQueryController(SearchQueryService service) {
+        this.service = service;
     }
-    
-    @PostMapping("/employees")
-    public ResponseEntity<List<Employee>> searchEmployees(@RequestBody List<String> skills, 
-                                                         @RequestParam Long userId) {
-        return ResponseEntity.ok(searchQueryService.searchEmployeesBySkills(skills, userId));
+
+    // CREATE
+    @PostMapping
+    public SearchQueryRecord createSearchQuery(
+            @RequestBody SearchQueryRecord record) {
+        return service.create(record);
     }
-    
+
+    // READ BY ID
     @GetMapping("/{id}")
-    public ResponseEntity<SearchQueryRecord> getQuery(@PathVariable Long id) {
-        return ResponseEntity.ok(searchQueryService.getQueryById(id));
+    public SearchQueryRecord getSearchQueryById(
+            @PathVariable Long id) {
+        return service.getById(id);
     }
-    
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<SearchQueryRecord>> getUserQueries(@PathVariable Long userId) {
-        return ResponseEntity.ok(searchQueryService.getQueriesForUser(userId));
+
+    // READ ALL
+    @GetMapping
+    public List<SearchQueryRecord> getAllSearchQueries() {
+        return service.getAll();
     }
 }
