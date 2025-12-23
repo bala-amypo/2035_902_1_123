@@ -11,21 +11,21 @@ import java.util.List;
 @Service
 public class SkillCategoryServiceImpl implements SkillCategoryService {
 
-    private final SkillCategoryRepository skillCategoryRepository;
+    private final SkillCategoryRepository SkillCategoryRepository;
 
-    public SkillCategoryServiceImpl(SkillCategoryRepository skillCategoryRepository) {
-        this.skillCategoryRepository = skillCategoryRepository;
+    public SkillCategoryServiceImpl(SkillCategoryRepository SkillCategoryRepository) {
+        this.SkillCategoryRepository = SkillCategoryRepository;
     }
 
     @Override
     public SkillCategory createCategory(SkillCategory category) {
-        skillCategoryRepository.findByCategoryName(category.getCategoryName())
+        SkillCategoryRepository.findByCategoryName(category.getCategoryName())
                 .ifPresent(c -> {
                     throw new IllegalArgumentException("Category already exists");
                 });
 
         category.setActive(true);
-        return skillCategoryRepository.save(category);
+        return SkillCategoryRepository.save(category);
     }
 
     @Override
@@ -35,25 +35,25 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
         existing.setCategoryName(category.getCategoryName());
         existing.setDescription(category.getDescription());
 
-        return skillCategoryRepository.save(existing);
+        return SkillCategoryRepository.save(existing);
     }
 
     @Override
     public SkillCategory getCategoryById(Long id) {
-        return skillCategoryRepository.findById(id)
+        return SkillCategoryRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("SkillCategory not found"));
     }
 
     @Override
     public List<SkillCategory> getAllCategories() {
-        return skillCategoryRepository.findAll();
+        return SkillCategoryRepository.findAll();
     }
 
     @Override
     public void deactivateCategory(Long id) {
         SkillCategory category = getCategoryById(id);
         category.setActive(false);
-        skillCategoryRepository.save(category);
+        SkillCategoryRepository.save(category);
     }
 }
