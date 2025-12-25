@@ -8,11 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SkillServiceImpl implements SkillServiceImpl {
+public class SkillServiceImpl implements SkillService {
 
     private final SkillRepository skillRepository;
 
-    // Required constructor for test injection
     public SkillServiceImpl(SkillRepository skillRepository) {
         this.skillRepository = skillRepository;
     }
@@ -20,7 +19,7 @@ public class SkillServiceImpl implements SkillServiceImpl {
     @Override
     public Skill createSkill(Skill skill) {
         skill.setActive(true);
-        return skillRepository.save(skill); [cite: 252]
+        return skillRepository.save(skill);
     }
 
     @Override
@@ -28,7 +27,7 @@ public class SkillServiceImpl implements SkillServiceImpl {
         Skill skill = skillRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Skill not found"));
         skill.setName(skillDetails.getName());
-        return skillRepository.save(skill); [cite: 328]
+        return skillRepository.save(skill);
     }
 
     @Override
