@@ -1,18 +1,16 @@
 package com.example.demo.repository;
 
+import com.example.demo.model.Employee;
 import com.example.demo.model.EmployeeSkill;
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface EmployeeSkillRepository extends JpaRepository<EmployeeSkill, Long> {
+    @Query("SELECT DISTINCT es.employee FROM EmployeeSkill es WHERE es.skill.name IN :skills AND es.active = true")
+    List<Employee> findEmployeesByAllSkillNames(@Param("skills") List<String> skills, @Param("userId") Long userId);
 
-    // Get all skills for an employee
-    List<EmployeeSkill> findByEmployeeId(Long employeeId);
-
-    // Get all active skills for an employee
     List<EmployeeSkill> findByEmployeeIdAndActiveTrue(Long employeeId);
-
-    // Get skills by skill name (for a specific employee)
-    List<EmployeeSkill> findByEmployeeIdAndSkillNameIn(Long employeeId, List<String> skillNames);
+    List<EmployeeSkill> findBySkillIdAndActiveTrue(Long skillId);
 }
