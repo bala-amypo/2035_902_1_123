@@ -9,8 +9,14 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String fullName;
+    
+    @Column(unique = true)
     private String email;
+    
+    private String department;
+    private String jobTitle;
     private Boolean active = true;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -18,7 +24,9 @@ public class Employee {
     @PrePersist
     public void onCreate() {
         this.createdAt = LocalDateTime.now();
-        [cite_start]if (this.active == null) this.active = true; [cite: 345]
+        if (this.active == null) {
+            this.active = true;
+        }
     }
 
     @PreUpdate
@@ -36,5 +44,7 @@ public class Employee {
     public Boolean getActive() { return active; }
     public void setActive(Boolean active) { this.active = active; }
     public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 }
