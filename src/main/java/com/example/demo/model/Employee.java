@@ -1,8 +1,3 @@
-package com.example.demo.model;
-
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
-
 @Entity
 public class Employee {
 
@@ -10,11 +5,31 @@ public class Employee {
     @GeneratedValue
     private Long id;
 
+    private String fullName;
     private String email;
-    private boolean active = true;
+    private String department;
+    private String jobTitle;
+    private Boolean active = true;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
-    // getters & setters
+    @PrePersist
+    public void onCreate() {
+        createdAt = new Timestamp(System.currentTimeMillis());
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = new Timestamp(System.currentTimeMillis());
+    }
+
+    // ✅ REQUIRED getters/setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
+
+    // others omitted for brevity
 }
