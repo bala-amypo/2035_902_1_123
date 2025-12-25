@@ -48,7 +48,7 @@ public class SearchQueryServiceImpl implements SearchQueryService {
         // 4. Create and persist the SearchQueryRecord for history tracking.
         SearchQueryRecord record = new SearchQueryRecord();
         record.setSearcherId(userId); [cite: 744]
-        record.setSkillsRequested(String.join(",", normalizedSkills)); [cite: 694;]
+        record.setSkillsRequested(String.join(",", normalizedSkills)); [cite: 694]
         record.setResultsCount(results.size()); [cite: 743]
         
         // Rely on @PrePersist in the entity to set searchedAt timestamp.
