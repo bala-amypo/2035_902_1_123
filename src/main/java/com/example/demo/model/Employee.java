@@ -10,23 +10,20 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fullName;
-    @Column(unique = true)
     private String email;
-    private String department;
-    private String jobTitle;
     private Boolean active = true;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     @PrePersist
     public void onCreate() {
-        createdAt = LocalDateTime.now();
-        if (active == null) active = true;
+        this.createdAt = LocalDateTime.now();
+        [cite_start]if (this.active == null) this.active = true; [cite: 345]
     }
 
     @PreUpdate
     public void onUpdate() {
-        updatedAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     // Standard Getters and Setters
