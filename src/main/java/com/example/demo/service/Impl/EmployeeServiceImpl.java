@@ -1,6 +1,5 @@
-package com.example.demo.serviceimpl;
+package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Employee;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
@@ -11,42 +10,33 @@ import java.util.List;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final EmployeeRepository repository;
+    private final EmployeeRepository repo;
 
-    public EmployeeServiceImpl(EmployeeRepository repository) {
-        this.repository = repository;
+    public EmployeeServiceImpl(EmployeeRepository repo) {
+        this.repo = repo;
     }
 
-    @Override
-    public Employee create(Employee employee) {
-        return repository.save(employee);
+    public Employee createEmployee(Employee e) {
+        return repo.save(e);
     }
 
-    @Override
-    public Employee update(Long id, Employee employee) {
-        Employee existing = getById(id);
-        existing.setFullName(employee.getFullName());
-        existing.setDepartment(employee.getDepartment());
-        existing.setJobTitle(employee.getJobTitle());
-        return repository.save(existing);
+    public Employee updateEmployee(long id, Employee e) {
+        e.setId(id);
+        return repo.save(e);
     }
 
-    @Override
-    public Employee getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Employee not found"));
+    public Employee getEmployeeById(long id) {
+        return repo.findById(id).orElse(null);
     }
 
-    @Override
-    public List<Employee> getAll() {
-        return repository.findAll();
+    public List<Employee> getAllEmployees() {
+        return repo.findAll();
     }
 
-    @Override
-    public void deactivate(Long id) {
-        Employee employee = getById(id);
-        employee.setActive(false);
-        repository.save(employee);
+    public void deactivateEmployee(long id) {
+        repo.findById(id).ifPresent(emp -> {
+            emp.setActive(false);
+            repo.save(emp);
+        });
     }
 }
