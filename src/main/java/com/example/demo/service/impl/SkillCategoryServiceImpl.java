@@ -18,16 +18,15 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
 
     @Override
     public SkillCategory createCategory(SkillCategory category) {
-        category.setActive(true);
         return skillCategoryRepository.save(category);
     }
 
     @Override
-    public SkillCategory updateCategory(Long id, SkillCategory categoryDetails) {
-        SkillCategory category = getCategoryById(id);
-        category.setCategoryName(categoryDetails.getCategoryName());
-        category.setDescription(categoryDetails.getDescription());
-        return skillCategoryRepository.save(category);
+    public SkillCategory updateCategory(Long id, SkillCategory category) {
+        SkillCategory existing = getCategoryById(id);
+        existing.setCategoryName(category.getCategoryName());
+        existing.setDescription(category.getDescription());
+        return skillCategoryRepository.save(existing);
     }
 
     @Override
