@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface SearchQueryRepository extends JpaRepository<SearchQueryRecord, Long> {
+public interface SearchQueryRecordRepository extends JpaRepository<SearchQueryRecord, Long> {
 
     // Get all search queries for an employee
     List<SearchQueryRecord> findByEmployeeId(Long employeeId);
