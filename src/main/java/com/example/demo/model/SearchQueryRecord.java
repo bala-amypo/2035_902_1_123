@@ -1,45 +1,37 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
-@Table(name = "search_query_records")
 public class SearchQueryRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long searcherId;
-    private String skillsRequested;
-    private Integer resultsCount;
+    @ElementCollection
+    private List<String> skills;
 
-    private Timestamp searchedAt;
+    private Long employeeId;
 
-    @PrePersist
-    public void onCreate() {
-        searchedAt = new Timestamp(System.currentTimeMillis());
+    private boolean active;
+
+    // Constructors
+    public SearchQueryRecord() {}
+
+    public SearchQueryRecord(List<String> skills, Long employeeId, boolean active) {
+        this.skills = skills;
+        this.employeeId = employeeId;
+        this.active = active;
     }
 
-  
+    // Getters and Setters
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public Long getSearcherId() { return searcherId; }
-    public void setSearcherId(Long searcherId) {
-        this.searcherId = searcherId;
-    }
-
-    public String getSkillsRequested() { return skillsRequested; }
-    public void setSkillsRequested(String skillsRequested) {
-        this.skillsRequested = skillsRequested;
-    }
-
-    public Integer getResultsCount() { return resultsCount; }
-    public void setResultsCount(Integer resultsCount) {
-        this.resultsCount = resultsCount;
-    }
-
-    public Timestamp getSearchedAt() { return searchedAt; }
+    public List<String> getSkills() { return skills; }
+    public void setSkills(List<String> skills) { this.skills = skills; }
+    public Long getEmployeeId() { return employeeId; }
+    public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 }

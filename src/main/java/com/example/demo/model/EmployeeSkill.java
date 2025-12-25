@@ -3,49 +3,35 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "employee_skills")
 public class EmployeeSkill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+    private Long employeeId;
 
     @ManyToOne
     @JoinColumn(name = "skill_id")
     private Skill skill;
 
-    private String proficiencyLevel;
-    private Integer yearsOfExperience;
-    private Boolean active = true;
+    private boolean active;
 
-    
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // Constructors
+    public EmployeeSkill() {}
 
-    public Employee getEmployee() { return employee; }
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public Skill getSkill() { return skill; }
-    public void setSkill(Skill skill) {
+    public EmployeeSkill(Long employeeId, Skill skill, boolean active) {
+        this.employeeId = employeeId;
         this.skill = skill;
+        this.active = active;
     }
 
-    public String getProficiencyLevel() { return proficiencyLevel; }
-    public void setProficiencyLevel(String proficiencyLevel) {
-        this.proficiencyLevel = proficiencyLevel;
-    }
-
-    public Integer getYearsOfExperience() { return yearsOfExperience; }
-    public void setYearsOfExperience(Integer yearsOfExperience) {
-        this.yearsOfExperience = yearsOfExperience;
-    }
-
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    // Getters and Setters
+    public Long getId() { return id; }
+    public Long getEmployeeId() { return employeeId; }
+    public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }
+    public Skill getSkill() { return skill; }
+    public void setSkill(Skill skill) { this.skill = skill; }
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 }
