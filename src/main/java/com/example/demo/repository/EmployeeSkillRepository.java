@@ -7,10 +7,12 @@ import java.util.List;
 
 public interface EmployeeSkillRepository extends JpaRepository<EmployeeSkill, Long> {
 
-    List<EmployeeSkill> findByEmployeeIdAndActiveTrue(long employeeId);
+    // Get all skills for an employee
+    List<EmployeeSkill> findByEmployeeId(Long employeeId);
 
-    List<EmployeeSkill> findBySkillIdAndActiveTrue(long skillId);
+    // Get all active skills for an employee
+    List<EmployeeSkill> findByEmployeeIdAndActiveTrue(Long employeeId);
 
-    // REQUIRED BY TEST (dummy)
-    List<Object> findEmployeesByAllSkillNames(List<Object> skills, long count);
+    // Get skills by skill name (for a specific employee)
+    List<EmployeeSkill> findByEmployeeIdAndSkillNameIn(Long employeeId, List<String> skillNames);
 }
