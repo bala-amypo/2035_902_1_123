@@ -12,24 +12,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-    // Exact constructor required for injection in tests [cite: 61]
     public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository; [cite: 15, 61]
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
     public Employee createEmployee(Employee employee) {
-        // Enforce unique email logic is typically handled by DB unique constraint or pre-check
         employee.setActive(true);
-        return employeeRepository.save(employee); [cite: 191]
+        return employeeRepository.save(employee);
     }
 
     @Override
     public Employee updateEmployee(Long id, Employee employeeDetails) {
-        Employee existing = getEmployeeById(id); [cite: 212]
-        existing.setFullName(employeeDetails.getFullName()); [cite: 218]
-        existing.setEmail(employeeDetails.getEmail()); [cite: 219]
-        return employeeRepository.save(existing); [cite: 213]
+        Employee existing = getEmployeeById(id);
+        existing.setFullName(employeeDetails.getFullName());
+        existing.setEmail(employeeDetails.getEmail());
+        return employeeRepository.save(existing);
     }
 
     @Override
@@ -40,13 +38,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll(); [cite: 233]
+        return employeeRepository.findAll();
     }
 
     @Override
     public void deactivateEmployee(Long id) {
-        Employee employee = getEmployeeById(id); [cite: 242]
-        employee.setActive(false); [cite: 245]
-        employeeRepository.save(employee); [cite: 243]
+        Employee employee = getEmployeeById(id);
+        employee.setActive(false);
+        employeeRepository.save(employee);
     }
 }
