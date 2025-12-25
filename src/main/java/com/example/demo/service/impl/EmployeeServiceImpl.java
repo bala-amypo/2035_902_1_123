@@ -2,48 +2,28 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.Employee;
 import com.example.demo.repository.EmployeeRepository;
-import com.example.demo.service.EmployeeService;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
+public class EmployeeServiceImpl {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeRepository repository;
 
-    @Override
-    public Employee createEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    // REQUIRED by Spring
+    public EmployeeServiceImpl() {}
+
+    // REQUIRED by TestNG
+    public EmployeeServiceImpl(EmployeeRepository repository) {
+        this.repository = repository;
     }
 
-    @Override
-    public Employee updateEmployee(long id, Employee employee) {
-        Employee existing = employeeRepository.findById(id).orElseThrow();
-        existing.setFullName(employee.getFullName());
-        existing.setEmail(employee.getEmail());
-        existing.setDepartment(employee.getDepartment());
-        existing.setJobTitle(employee.getJobTitle());
-        return employeeRepository.save(existing);
+    public Employee save(Employee employee) {
+        return repository.save(employee);
     }
 
-    @Override
-    public Employee getEmployeeById(long id) {
-        return employeeRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
-    }
-
-    @Override
-    public void deactivateEmployee(long id) {
-        Employee employee = employeeRepository.findById(id).orElseThrow();
-        employee.setActive(false);
-        employeeRepository.save(employee);
+    public List<Employee> findAll() {
+        return repository.findAll();
     }
 }

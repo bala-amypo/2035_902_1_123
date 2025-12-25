@@ -1,17 +1,16 @@
 package com.example.demo.service;
 
 import com.example.demo.model.EmployeeSkill;
+
 import java.util.List;
 
 public interface EmployeeSkillService {
 
-    EmployeeSkill create(EmployeeSkill employeeSkill);
+    EmployeeSkill createEmployeeSkill(EmployeeSkill employeeSkill);
 
-    EmployeeSkill update(Long id, EmployeeSkill employeeSkill);
+    void deactivateEmployeeSkill(long id);
 
-    EmployeeSkill getById(Long id);
+    List<EmployeeSkill> getSkillsForEmployee(long employeeId);
 
-    List<EmployeeSkill> getAll();
-
-    void deactivate(Long id);
+    List<EmployeeSkill> getEmployeesBySkill(long skillId);
 }
