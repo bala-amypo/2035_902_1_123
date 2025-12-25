@@ -1,8 +1,7 @@
-package com.example.demo.serviceimpl;
+package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.SearchQueryRecord;
-import com.example.demo.repository.SearchQueryRecordRepository;
+import com.example.demo.model.EmployeeSkill;
 import com.example.demo.service.SearchQueryService;
 import org.springframework.stereotype.Service;
 
@@ -11,26 +10,27 @@ import java.util.List;
 @Service
 public class SearchQueryServiceImpl implements SearchQueryService {
 
-    private final SearchQueryRecordRepository repository;
-
-    public SearchQueryServiceImpl(SearchQueryRecordRepository repository) {
-        this.repository = repository;
-    }
-
     @Override
     public SearchQueryRecord create(SearchQueryRecord record) {
-        return repository.save(record);
+        // TODO: Add implementation to save search query
+        return null;
     }
 
     @Override
     public SearchQueryRecord getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Search query not found"));
+        // TODO: Add implementation to fetch search query by id
+        return null;
     }
 
     @Override
     public List<SearchQueryRecord> getAll() {
-        return repository.findAll();
+        // TODO: Add implementation to fetch all search queries
+        return null;
+    }
+
+    @Override
+    public List<EmployeeSkill> searchEmployeesBySkills(List<Long> skillIds, long employeeId) {
+        // TODO: Add implementation to search employees by skills
+        return null;
     }
 }

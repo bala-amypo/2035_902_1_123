@@ -1,16 +1,16 @@
 package com.example.demo.service;
 
 import com.example.demo.model.SearchQueryRecord;
-
+import com.example.demo.model.EmployeeSkill;
 import java.util.List;
 
 public interface SearchQueryService {
 
-    SearchQueryRecord saveQuery(SearchQueryRecord record);
+    SearchQueryRecord create(SearchQueryRecord record);
 
-    SearchQueryRecord getQueryById(long id);
+    SearchQueryRecord getById(Long id);
 
-    List<SearchQueryRecord> getQueriesForUser(long userId);
+    List<SearchQueryRecord> getAll();
 
-    List<Object> searchEmployeesBySkills(List<?> skills, long count);
+    List<EmployeeSkill> searchEmployeesBySkills(List<Long> skillIds, long employeeId);
 }

@@ -1,30 +1,40 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.Skill;
-import com.example.demo.repository.SkillRepository;
 import com.example.demo.service.SkillService;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class SkillServiceImpl implements SkillService {
 
-    private final SkillRepository repo;
-
-    public SkillServiceImpl(SkillRepository repo) {
-        this.repo = repo;
+    @Override
+    public Skill create(Skill skill) {
+        // TODO: Add implementation to save skill
+        return null;
     }
 
-    public Skill createSkill(Skill skill) {
-        return repo.save(skill);
+    @Override
+    public Skill update(Long id, Skill skill) {
+        // TODO: Add implementation to update skill by id
+        return null;
     }
 
-    public Skill updateSkill(long id, Skill skill) {
-        Skill s = repo.findById(id).orElseThrow();
-        s.setName(skill.getName());
-        return repo.save(s);
+    @Override
+    public Skill getById(Long id) {
+        // TODO: Add implementation to fetch skill by id
+        return null;
     }
 
-    public void deactivateSkill(long id) {
-        Skill s = repo.findById(id).orElseThrow();
-        s.setActive(false);
-        repo.save(s);
+    @Override
+    public List<Skill> getAll() {
+        // TODO: Add implementation to fetch all skills
+        return null;
+    }
+
+    @Override
+    public void deactivate(Long id) {
+        // TODO: Add implementation to deactivate skill by id
     }
 }

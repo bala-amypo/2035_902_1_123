@@ -1,8 +1,6 @@
-package com.example.demo.serviceimpl;
+package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.EmployeeSkill;
-import com.example.demo.repository.EmployeeSkillRepository;
 import com.example.demo.service.EmployeeSkillService;
 import org.springframework.stereotype.Service;
 
@@ -11,43 +9,38 @@ import java.util.List;
 @Service
 public class EmployeeSkillServiceImpl implements EmployeeSkillService {
 
-    private final EmployeeSkillRepository repository;
-
-    public EmployeeSkillServiceImpl(EmployeeSkillRepository repository) {
-        this.repository = repository;
-    }
-
     @Override
     public EmployeeSkill create(EmployeeSkill employeeSkill) {
-        return repository.save(employeeSkill);
+        // TODO: Add implementation to save employeeSkill
+        return null;
     }
 
     @Override
     public EmployeeSkill update(Long id, EmployeeSkill employeeSkill) {
-        EmployeeSkill existing = getById(id);
-        existing.setEmployee(employeeSkill.getEmployee());
-        existing.setSkill(employeeSkill.getSkill());
-        existing.setProficiencyLevel(employeeSkill.getProficiencyLevel());
-        existing.setYearsOfExperience(employeeSkill.getYearsOfExperience());
-        return repository.save(existing);
+        // TODO: Add implementation to update employeeSkill by id
+        return null;
     }
 
     @Override
     public EmployeeSkill getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("EmployeeSkill not found"));
+        // TODO: Add implementation to fetch employeeSkill by id
+        return null;
     }
 
     @Override
     public List<EmployeeSkill> getAll() {
-        return repository.findAll();
+        // TODO: Add implementation to fetch all employeeSkills
+        return null;
     }
 
     @Override
     public void deactivate(Long id) {
-        EmployeeSkill employeeSkill = getById(id);
-        employeeSkill.setActive(false);
-        repository.save(employeeSkill);
+        // TODO: Add implementation to deactivate employeeSkill by id
+    }
+
+    @Override
+    public List<EmployeeSkill> getEmployeesBySkill(long skillId) {
+        // TODO: Add implementation to fetch employees by skill
+        return null;
     }
 }
