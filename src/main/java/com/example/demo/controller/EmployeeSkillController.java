@@ -3,11 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.model.EmployeeSkill;
 import com.example.demo.service.EmployeeSkillService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/employee-skills")
+@RequestMapping("/api/employee-skills")
 public class EmployeeSkillController {
 
     private final EmployeeSkillService service;
@@ -17,30 +16,26 @@ public class EmployeeSkillController {
     }
 
     @PostMapping
-    public EmployeeSkill createEmployeeSkill(
-            @RequestBody EmployeeSkill employeeSkill) {
-        return service.create(employeeSkill);
+    public EmployeeSkill create(@RequestBody EmployeeSkill mapping) {
+        // Updated to use the correct service method name
+        return service.createEmployeeSkill(mapping);
     }
 
-    @PutMapping("/{id}")
-    public EmployeeSkill updateEmployeeSkill(
-            @PathVariable Long id,
-            @RequestBody EmployeeSkill employeeSkill) {
-        return service.update(id, employeeSkill);
+    @GetMapping("/employee/{employeeId}")
+    public List<EmployeeSkill> getByEmployee(@PathVariable Long employeeId) {
+        // Updated to use the correct service method name
+        return service.getSkillsForEmployee(employeeId);
     }
 
-    @GetMapping("/{id}")
-    public EmployeeSkill getEmployeeSkill(@PathVariable Long id) {
-        return service.getById(id);
-    }
-
-    @GetMapping
-    public List<EmployeeSkill> getAllEmployeeSkills() {
-        return service.getAll();
+    @GetMapping("/skill/{skillId}")
+    public List<EmployeeSkill> getBySkill(@PathVariable Long skillId) {
+        // Updated to use the correct service method name
+        return service.getEmployeesBySkill(skillId);
     }
 
     @PutMapping("/{id}/deactivate")
-    public void deactivateEmployeeSkill(@PathVariable Long id) {
-        service.deactivate(id);
+    public void deactivate(@PathVariable Long id) {
+        // Updated to use the correct service method name
+        service.deactivateEmployeeSkill(id);
     }
 }
