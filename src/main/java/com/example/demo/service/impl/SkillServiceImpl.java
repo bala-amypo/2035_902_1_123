@@ -1,40 +1,46 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.Skill;
+import com.example.demo.repository.SkillRepository;
 import com.example.demo.service.SkillService;
+import com.example.demo.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
-public class SkillServiceImpl implements SkillService {
+public class SkillServiceImpl implements SkillServiceImpl {
 
-    @Override
-    public Skill create(Skill skill) {
-        // TODO: Add implementation to save skill
-        return null;
+    private final SkillRepository skillRepository;
+
+    // Required constructor for test injection
+    public SkillServiceImpl(SkillRepository skillRepository) {
+        this.skillRepository = skillRepository;
     }
 
     @Override
-    public Skill update(Long id, Skill skill) {
-        // TODO: Add implementation to update skill by id
-        return null;
+    public Skill createSkill(Skill skill) {
+        skill.setActive(true);
+        return skillRepository.save(skill); [cite: 252]
     }
 
     @Override
-    public Skill getById(Long id) {
-        // TODO: Add implementation to fetch skill by id
-        return null;
+    public Skill updateSkill(Long id, Skill skillDetails) {
+        Skill skill = skillRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Skill not found"));
+        skill.setName(skillDetails.getName());
+        return skillRepository.save(skill); [cite: 328]
     }
 
     @Override
-    public List<Skill> getAll() {
-        // TODO: Add implementation to fetch all skills
-        return null;
+    public void deactivateSkill(Long id) {
+        Skill skill = skillRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Skill not found"));
+        skill.setActive(false);
+        skillRepository.save(skill);
     }
 
     @Override
-    public void deactivate(Long id) {
-        // TODO: Add implementation to deactivate skill by id
+    public List<Skill> getAllSkills() {
+        return skillRepository.findAll();
     }
 }
