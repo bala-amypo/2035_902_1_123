@@ -24,7 +24,6 @@ public class Employee {
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
 
-    // ✅ REQUIRED getters/setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
