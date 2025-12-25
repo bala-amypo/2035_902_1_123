@@ -5,9 +5,11 @@ import com.example.demo.model.SearchQueryRecord;
 import com.example.demo.repository.EmployeeSkillRepository;
 import com.example.demo.repository.SearchQueryRecordRepository;
 import com.example.demo.service.SearchQueryService;
+import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class SearchQueryServiceImpl implements SearchQueryService {
 
     private final SearchQueryRecordRepository searchQueryRecordRepository;
@@ -25,10 +27,8 @@ public class SearchQueryServiceImpl implements SearchQueryService {
             throw new IllegalArgumentException("must not be empty");
         }
 
-        // Normalizing for the test: testSearchEmployeesBySkillsTrimsAndNormalizes [cite: 684]
         List<String> normalized = skills.stream()
-                .map(String::trim)
-                .map(String::toLowerCase)
+                .map(s -> s.trim().toLowerCase())
                 .distinct()
                 .collect(Collectors.toList());
 
@@ -50,8 +50,7 @@ public class SearchQueryServiceImpl implements SearchQueryService {
 
     @Override
     public SearchQueryRecord getQueryById(Long id) {
-        return searchQueryRecordRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Search query not found"));
+        return searchQueryRecordRepository.findById(id).orElse(null);
     }
 
     @Override
