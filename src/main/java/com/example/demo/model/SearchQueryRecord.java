@@ -17,18 +17,14 @@ public class SearchQueryRecord {
 
     public SearchQueryRecord() {}
 
-    /**
-     * Sets the searchedAt timestamp automatically before persisting.
-     */
     @PrePersist
     public void onCreate() {
-        [cite_start]this.searchedAt = LocalDateTime.now(); [cite: 364]
+        this.searchedAt = LocalDateTime.now();
         if (this.resultsCount == null) {
-            [cite_start]this.resultsCount = 0; [cite: 365]
+            this.resultsCount = 0;
         }
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

@@ -15,12 +15,10 @@ public class Skill {
     private String category;
     private String description;
     
-    // Default to true as per SRS and tests
     private Boolean active = true;
 
     public Skill() {}
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
