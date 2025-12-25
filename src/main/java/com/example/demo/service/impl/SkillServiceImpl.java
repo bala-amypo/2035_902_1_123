@@ -12,7 +12,7 @@ public class SkillServiceImpl implements SkillService {
 
     private final SkillRepository skillRepository;
 
-    public SkillServiceImpl(SkillRepository skillRepository) { // Constructor injection
+    public SkillServiceImpl(SkillRepository skillRepository) {
         this.skillRepository = skillRepository;
     }
 
@@ -24,9 +24,9 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public Skill updateSkill(Long id, Skill skillDetails) {
-        Skill existing = getSkillById(id);
-        existing.setName(skillDetails.getName());
-        return skillRepository.save(existing);
+        Skill skill = getSkillById(id);
+        skill.setName(skillDetails.getName());
+        return skillRepository.save(skill);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public void deactivate(Long id) { // Renamed from deactivateSkill 
+    public void deactivateSkill(Long id) { // Updated name 
         Skill skill = getSkillById(id);
         skill.setActive(false);
         skillRepository.save(skill);
