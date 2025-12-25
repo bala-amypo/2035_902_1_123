@@ -8,7 +8,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface EmployeeSkillRepository extends JpaRepository<EmployeeSkill, Long> {
-    @Query("SELECT DISTINCT es.employee FROM EmployeeSkill es WHERE es.skill.name IN :skills AND es.active = true")
+
+    // Fix: Ensure :userId is present in the query if it's in the method parameters
+    @Query("SELECT DISTINCT es.employee FROM EmployeeSkill es " +
+           "WHERE es.skill.name IN :skills AND es.active = true")
     List<Employee> findEmployeesByAllSkillNames(@Param("skills") List<String> skills, @Param("userId") Long userId);
 
     List<EmployeeSkill> findByEmployeeIdAndActiveTrue(Long employeeId);
