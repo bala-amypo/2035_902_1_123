@@ -12,20 +12,20 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
 
     private final SkillCategoryRepository skillCategoryRepository;
 
-    public SkillCategoryServiceImpl(SkillCategoryRepository skillCategoryRepository) {
+    public SkillCategoryServiceImpl(SkillCategoryRepository skillCategoryRepository) { //
         this.skillCategoryRepository = skillCategoryRepository;
     }
 
     @Override
     public SkillCategory createCategory(SkillCategory category) {
+        category.setActive(true);
         return skillCategoryRepository.save(category);
     }
 
     @Override
-    public SkillCategory updateCategory(Long id, SkillCategory category) {
+    public SkillCategory updateCategory(Long id, SkillCategory categoryDetails) {
         SkillCategory existing = getCategoryById(id);
-        existing.setCategoryName(category.getCategoryName());
-        existing.setDescription(category.getDescription());
+        existing.setCategoryName(categoryDetails.getCategoryName());
         return skillCategoryRepository.save(existing);
     }
 
@@ -41,7 +41,7 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
     }
 
     @Override
-    public void deactivateCategory(Long id) {
+    public void deactivate(Long id) { // Renamed from deactivateCategory 
         SkillCategory category = getCategoryById(id);
         category.setActive(false);
         skillCategoryRepository.save(category);

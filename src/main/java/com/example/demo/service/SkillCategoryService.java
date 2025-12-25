@@ -6,7 +6,7 @@ import java.util.List;
 public interface SkillCategoryService {
     SkillCategory createCategory(SkillCategory category);
     SkillCategory updateCategory(Long id, SkillCategory category);
-    SkillCategory getById(Long id);
-    List<SkillCategory> getAll();
-    void deactivate(Long id);
+    SkillCategory getCategoryById(Long id);
+    List<SkillCategory> getAllCategories();
+    void deactivate(Long id); // Updated to match compiler requirement 
 }

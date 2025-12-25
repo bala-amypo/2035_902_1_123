@@ -12,7 +12,7 @@ public class SkillServiceImpl implements SkillService {
 
     private final SkillRepository skillRepository;
 
-    public SkillServiceImpl(SkillRepository skillRepository) {
+    public SkillServiceImpl(SkillRepository skillRepository) { // Constructor injection
         this.skillRepository = skillRepository;
     }
 
@@ -23,10 +23,9 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public Skill updateSkill(Long id, Skill skill) {
-        Skill existing = skillRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Skill not found"));
-        existing.setName(skill.getName());
+    public Skill updateSkill(Long id, Skill skillDetails) {
+        Skill existing = getSkillById(id);
+        existing.setName(skillDetails.getName());
         return skillRepository.save(existing);
     }
 
@@ -42,7 +41,7 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public void deactivateSkill(Long id) {
+    public void deactivate(Long id) { // Renamed from deactivateSkill 
         Skill skill = getSkillById(id);
         skill.setActive(false);
         skillRepository.save(skill);
