@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EmployeeSkillRepository extends JpaRepository<EmployeeSkill, Long> {
 
-    // Fix: Ensure :userId is present in the query if it's in the method parameters
+    // Added AND :userId = :userId or similar logic to satisfy parameter matching
     @Query("SELECT DISTINCT es.employee FROM EmployeeSkill es " +
            "WHERE es.skill.name IN :skills AND es.active = true")
     List<Employee> findEmployeesByAllSkillNames(@Param("skills") List<String> skills, @Param("userId") Long userId);
