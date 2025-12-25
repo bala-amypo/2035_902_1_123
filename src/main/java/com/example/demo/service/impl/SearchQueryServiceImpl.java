@@ -1,12 +1,15 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.*;
-import com.example.demo.repository.*;
+import com.example.demo.model.Employee;
+import com.example.demo.model.SearchQueryRecord;
+import com.example.demo.repository.EmployeeSkillRepository;
+import com.example.demo.repository.SearchQueryRecordRepository;
 import com.example.demo.service.SearchQueryService;
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class SearchQueryServiceImpl implements SearchQueryService {
+
     private final SearchQueryRecordRepository searchQueryRecordRepository;
     private final EmployeeSkillRepository employeeSkillRepository;
 
@@ -22,18 +25,18 @@ public class SearchQueryServiceImpl implements SearchQueryService {
             throw new IllegalArgumentException("must not be empty");
         }
 
-        // Trimming and distinct as per test testSearchEmployeesBySkillsTrimsAndNormalizes
-        List<String> normalizedSkills = skills.stream()
+        // Normalizing for the test: testSearchEmployeesBySkillsTrimsAndNormalizes [cite: 684]
+        List<String> normalized = skills.stream()
                 .map(String::trim)
                 .map(String::toLowerCase)
                 .distinct()
                 .collect(Collectors.toList());
 
-        List<Employee> results = employeeSkillRepository.findEmployeesByAllSkillNames(normalizedSkills, userId);
+        List<Employee> results = employeeSkillRepository.findEmployeesByAllSkillNames(normalized, userId);
 
         SearchQueryRecord record = new SearchQueryRecord();
         record.setSearcherId(userId);
-        record.setSkillsRequested(String.join(",", normalizedSkills));
+        record.setSkillsRequested(String.join(",", normalized));
         record.setResultsCount(results.size());
         searchQueryRecordRepository.save(record);
 
@@ -41,13 +44,14 @@ public class SearchQueryServiceImpl implements SearchQueryService {
     }
 
     @Override
-    public SearchQueryRecord saveQuery(SearchQueryRecord record) {
-        return searchQueryRecordRepository.save(record);
+    public SearchQueryRecord saveQuery(SearchQueryRecord query) {
+        return searchQueryRecordRepository.save(query);
     }
 
     @Override
     public SearchQueryRecord getQueryById(Long id) {
-        return searchQueryRecordRepository.findById(id).orElse(null);
+        return searchQueryRecordRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Search query not found"));
     }
 
     @Override
