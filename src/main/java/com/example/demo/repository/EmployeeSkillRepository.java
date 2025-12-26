@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EmployeeSkillRepository extends JpaRepository<EmployeeSkill, Long> {
 
-    // Added AND (:userId IS NULL OR :userId = :userId) to satisfy the parameter check
+    
     @Query("SELECT DISTINCT es.employee FROM EmployeeSkill es " +
            "WHERE es.skill.name IN :skills AND es.active = true " +
            "AND (:userId IS NULL OR :userId = :userId)")

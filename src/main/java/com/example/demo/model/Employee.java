@@ -34,7 +34,6 @@ public class Employee {
         this.updatedAt = LocalDateTime.now();
     }
 
-    // Standard Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getFullName() { return fullName; }
