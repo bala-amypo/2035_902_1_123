@@ -33,7 +33,7 @@ public class SecurityConfig {
             .cors(Customizer.withDefaults()) 
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() // Public auth endpoints
+                .requestMatchers("/api/auth/**").permitAll() 
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() 
                 .anyRequest().authenticated()
             );
@@ -45,7 +45,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Requirement for password hashing
+        return new BCryptPasswordEncoder(); 
     }
 
     @Bean

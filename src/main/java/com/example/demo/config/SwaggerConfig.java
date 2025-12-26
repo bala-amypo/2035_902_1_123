@@ -23,7 +23,7 @@ public class SwaggerConfig {
                 .servers(List.of(
                         new Server().url("https://9050.408procr.amypo.ai/")
                 ))
-                // Add the Authorization Lock here
+                
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
                 .components(new Components()
                         .addSecuritySchemes(securitySchemeName, new SecurityScheme()

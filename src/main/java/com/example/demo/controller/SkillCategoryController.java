@@ -37,7 +37,7 @@ public class SkillCategoryController {
 
     @PutMapping("/{id}/deactivate")
     public void deactivate(@PathVariable Long id) {
-        // This call will now find the symbol in the Service
+        
         service.deactivateCategory(id);
     }
 }

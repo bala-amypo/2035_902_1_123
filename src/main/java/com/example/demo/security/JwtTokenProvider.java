@@ -14,12 +14,10 @@ import java.util.function.Function;
 @Component
 public class JwtTokenProvider {
 
-    // 64-character alphanumeric key to satisfy HS256 requirements and avoid decoding issues
     private String secretKey = "v9yBEHMcQfTjWnZr4u7xACFJaNdRgUkXp2s5v8yBEGKbPeShVmYp3s6v9yBEHMcQ"; 
 
     public String generateToken(Long userId, String email, String role) {
         Map<String, Object> claims = new HashMap<>();
-        // These specific keys are required by the test suite assertions
         claims.put("userId", userId);
         claims.put("role", role);
         
@@ -32,24 +30,21 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // Required for test case: testGenerateJwtTokenContainsEmailRoleUserId
     public String getEmailFromToken(String token) {
         return extractUsername(token);
     }
 
-    // Required for test case: testGenerateJwtTokenContainsEmailRoleUserId
     public Long getUserIdFromToken(String token) {
         Claims claims = extractAllClaims(token);
         return Long.valueOf(claims.get("userId").toString());
     }
 
-    // Required for test cases: testTokenRoleCaseInsensitiveAuthority and others
     public String getRoleFromToken(String token) {
         Claims claims = extractAllClaims(token);
         return claims.get("role", String.class);
     }
 
-    // Required for test case: testTokenClaimsNotNull
+    
     public Claims getClaims(String token) {
         return extractAllClaims(token);
     }

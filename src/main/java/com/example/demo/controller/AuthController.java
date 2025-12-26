@@ -19,13 +19,13 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody AuthRegisterRequest request) {
-        // Endpoint for new user creation
+        
         return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthLoginRequest request) {
-        // Endpoint for user authentication and JWT generation
+        
         return ResponseEntity.ok(authService.login(request));
     }
 }
