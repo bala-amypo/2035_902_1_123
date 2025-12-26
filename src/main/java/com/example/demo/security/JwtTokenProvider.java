@@ -14,20 +14,44 @@ import java.util.function.Function;
 @Component
 public class JwtTokenProvider {
 
-    // Use a key that is at least 256 bits (32 characters)
-    private String secretKey = "v9y$B&E)H@McQfTjWnZr4u7x!A%C*F-JaNdRgUkXp2s5v8y/B?E(G+KbPeShVmYp"; 
+    // 64-character alphanumeric key to satisfy HS256 requirements and avoid decoding issues
+    private String secretKey = "v9yBEHMcQfTjWnZr4u7xACFJaNdRgUkXp2s5v8yBEGKbPeShVmYp3s6v9yBEHMcQ"; 
 
     public String generateToken(Long userId, String email, String role) {
         Map<String, Object> claims = new HashMap<>();
+        // These specific keys are required by the test suite assertions
         claims.put("userId", userId);
         claims.put("role", role);
+        
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(email)
+                .setSubject(email) // Email is stored as the subject
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) 
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+    }
+
+    // Required for test case: testGenerateJwtTokenContainsEmailRoleUserId
+    public String getEmailFromToken(String token) {
+        return extractUsername(token);
+    }
+
+    // Required for test case: testGenerateJwtTokenContainsEmailRoleUserId
+    public Long getUserIdFromToken(String token) {
+        Claims claims = extractAllClaims(token);
+        return Long.valueOf(claims.get("userId").toString());
+    }
+
+    // Required for test cases: testTokenRoleCaseInsensitiveAuthority and others
+    public String getRoleFromToken(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.get("role", String.class);
+    }
+
+    // Required for test case: testTokenClaimsNotNull
+    public Claims getClaims(String token) {
+        return extractAllClaims(token);
     }
 
     public boolean validateToken(String token) {
@@ -43,30 +67,8 @@ public class JwtTokenProvider {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public String getEmailFromToken(String token) {
-        return extractUsername(token);
-    }
-
-    public Long getUserIdFromToken(String token) {
-        Claims claims = extractAllClaims(token);
-        return Long.valueOf(claims.get("userId").toString());
-    }
-
-    public String getRoleFromToken(String token) {
-        Claims claims = extractAllClaims(token);
-        return claims.get("role", String.class);
-    }
-
-    public Claims getClaims(String token) {
-        return extractAllClaims(token);
-    }
-
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
-    }
-
-    public Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -82,6 +84,6 @@ public class JwtTokenProvider {
     }
 
     private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+        return extractClaim(token, Claims::getExpiration).before(new Date());
     }
 }
