@@ -35,12 +35,13 @@ public class AuthServiceImpl implements AuthService {
         User user = new User();
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
-        // Encode password before saving
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole("USER");
         
         User savedUser = userRepository.save(user);
-        String token = jwtTokenProvider.generateToken(savedUser.getEmail());
+        
+        // Corrected: Pass ID, Email, and Role to match JwtTokenProvider
+        String token = jwtTokenProvider.generateToken(savedUser.getId(), savedUser.getEmail(), savedUser.getRole());
         
         return new AuthResponse(token, savedUser.getId(), savedUser.getEmail(), savedUser.getRole());
     }
@@ -54,7 +55,8 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         
-        String token = jwtTokenProvider.generateToken(user.getEmail());
+        // Corrected: Pass ID, Email, and Role to match JwtTokenProvider
+        String token = jwtTokenProvider.generateToken(user.getId(), user.getEmail(), user.getRole());
         
         return new AuthResponse(token, user.getId(), user.getEmail(), user.getRole());
     }
