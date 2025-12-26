@@ -8,5 +8,5 @@ public interface SkillService {
     Skill updateSkill(Long id, Skill skill);
     Skill getSkillById(Long id);
     List<Skill> getAllSkills();
-    void deactivateSkill(Long id); // Updated name to pass test case 
+    void deactivateSkill(Long id); // Use specific name required by TestNG
 }

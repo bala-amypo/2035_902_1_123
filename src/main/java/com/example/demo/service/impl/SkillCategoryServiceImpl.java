@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public class SkillCategoryServiceImpl implements SkillCategoryService {
-
     private final SkillCategoryRepository skillCategoryRepository;
 
     public SkillCategoryServiceImpl(SkillCategoryRepository skillCategoryRepository) { //
@@ -41,7 +40,7 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
     }
 
     @Override
-    public void deactivate(Long id) { // Renamed from deactivateCategory 
+    public void deactivateCategory(Long id) {
         SkillCategory category = getCategoryById(id);
         category.setActive(false);
         skillCategoryRepository.save(category);
