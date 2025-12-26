@@ -37,7 +37,7 @@ public class SkillController {
 
     @PutMapping("/{id}/deactivate")
     public void deactivate(@PathVariable Long id) {
-        // Matches the method name required by the TestNG suite
+       
         service.deactivateSkill(id);
     }
 }
