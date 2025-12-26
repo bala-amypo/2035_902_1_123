@@ -14,7 +14,8 @@ import java.util.function.Function;
 @Component
 public class JwtTokenProvider {
 
-    private String secretKey = "secret"; 
+    // Use a key that is at least 256 bits (32 characters)
+    private String secretKey = "v9y$B&E)H@McQfTjWnZr4u7x!A%C*F-JaNdRgUkXp2s5v8y/B?E(G+KbPeShVmYp"; 
 
     public String generateToken(Long userId, String email, String role) {
         Map<String, Object> claims = new HashMap<>();
@@ -29,7 +30,6 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // Required by Tests: Overloaded validateToken
     public boolean validateToken(String token) {
         try {
             return !isTokenExpired(token);
@@ -38,30 +38,25 @@ public class JwtTokenProvider {
         }
     }
 
-    // Required by Filter: Signature with UserDetails
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    // Required by Tests: getEmailFromToken
     public String getEmailFromToken(String token) {
         return extractUsername(token);
     }
 
-    // Required by Tests: getUserIdFromToken
     public Long getUserIdFromToken(String token) {
         Claims claims = extractAllClaims(token);
         return Long.valueOf(claims.get("userId").toString());
     }
 
-    // Required by Tests: getRoleFromToken
     public String getRoleFromToken(String token) {
         Claims claims = extractAllClaims(token);
         return claims.get("role", String.class);
     }
 
-    // Required by Tests: getClaims
     public Claims getClaims(String token) {
         return extractAllClaims(token);
     }
