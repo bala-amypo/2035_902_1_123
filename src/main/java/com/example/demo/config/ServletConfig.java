@@ -26,11 +26,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class ServletConfig implements WebMvcConfigurer {
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // Apply to all endpoints
-                .allowedOrigins("*") // Allow any origin to prevent CORS errors
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Required methods
-                .allowedHeaders("*")
-                .allowCredentials(false);
-    }
+public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**")
+            .allowedOrigins("*") // Allows the Swagger UI to communicate
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+            .allowedHeaders("*")
+            .allowCredentials(false);
+}
 }
