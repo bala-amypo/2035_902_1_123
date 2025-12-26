@@ -1,0 +1,31 @@
+package com.example.demo.controller;
+
+import com.example.demo.dto.AuthLoginRequest;
+import com.example.demo.dto.AuthRegisterRequest;
+import com.example.demo.dto.AuthResponse;
+import com.example.demo.service.AuthService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(@RequestBody AuthRegisterRequest request) {
+        // Endpoint for new user creation
+        return ResponseEntity.ok(authService.register(request));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthLoginRequest request) {
+        // Endpoint for user authentication and JWT generation
+        return ResponseEntity.ok(authService.login(request));
+    }
+}
