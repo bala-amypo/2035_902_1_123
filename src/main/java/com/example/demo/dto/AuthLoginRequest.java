@@ -1,7 +1,7 @@
 package com.example.demo.dto;
 
 public class AuthLoginRequest {
-    private String email; // can also be username
+    private String email; 
     private String password;
 
     public String getEmail() { return email; }

@@ -4,7 +4,7 @@ public class AuthRegisterRequest {
     private String fullName;
     private String email;
     private String password;
-    private String role; // optional; "USER" or "ADMIN"
+    private String role; 
 
     public String getFullName() { return fullName; }
     public void setFullName(String fullName) { this.fullName = fullName; }
